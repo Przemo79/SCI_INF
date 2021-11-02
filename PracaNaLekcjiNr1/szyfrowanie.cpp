@@ -7,40 +7,42 @@ string pierwsze(string pierwsze)
 	unsigned int oile = 0;
 	cout << "\nO ile przesunac litery? (max 26): ";
 	cin >> oile;
-	if (oile > 0 && oile < 27)
+	if (oile > 1 && oile < 27)
 	{
 		for (unsigned int i = 0; i < pierwsze.length(); i++)
 		{
-			pierwsze[i] = pierwsze[i] + oile;
-			if (pierwsze[i] > 122)
+			if (pierwsze[i] != 32)
 			{
-				pierwsze[i] = pierwsze[i] - 26;
+				pierwsze[i] = pierwsze[i] + oile;
+				if (pierwsze[i] > 122 || pierwsze[i] < 97)
+				{
+					pierwsze[i] = pierwsze[i] - 26;
+				}
 			}
 		}
 		return pierwsze;
 	}
 	else
 	{
-		cout << "\nBledna wartosc!";
+		return "\nBledna wartosc!";
 	}
 }
 
-string czwarte(string czwarte1)
+string czwarte(string czwarte1, int il)
 {
-	unsigned int oile = 0;
-	for (int j = 0; j < 26; j++)
+	for (int i = 0; i < czwarte1.length(); i++)
 	{
-		for (unsigned int i = 0; i < czwarte1.length(); i++)
+		if (czwarte1[i] != 32)
 		{
-			czwarte1[i] = czwarte1[i] - j;
+			czwarte1[i] = czwarte1[i] - il;
 			if (czwarte1[i] < 97)
 			{
 				czwarte1[i] = czwarte1[i] + 26;
 			}
 		}
-		return czwarte1;
-
 	}
+	return czwarte1;
+
 }
 
 
@@ -65,7 +67,7 @@ string drugie(string drugie)
 			drugie[i + 1] = tym;
 		}
 	}
-	
+
 	return drugie;
 }
 
@@ -77,26 +79,29 @@ int main()
 	getline(cin, text);
 
 	cout << "\nWybierz metode szyfrowania:\n  1. Szyfr podstawieniowy.\n  2. Szyfr przestawieniowy.\n  3. Szyfr podstawieniowy i przestawieniowy.\n  4. Odszyfrowywanie.";
-	cout << "\nTwoj wybor: ";
+	cout << "\n\nTwoj wybor: ";
 	cin >> wyb;
 
 	if (wyb == 1)
 	{
-		cout << "\nTwoj tekst: " << pierwsze(text);
+		cout << "\nTwoj tekst: " << pierwsze(text) << endl;
 	}
 	else if (wyb == 2)
 	{
-		cout << "\nTwoj tekst: " << drugie(text);
+		cout << "\nTwoj tekst: " << drugie(text) << endl;
 	}
 	else if (wyb == 3)
 	{
 		string trzecie;
 		trzecie = pierwsze(text);
-		cout << "\nTwoj tekst: " << drugie(trzecie);
+		cout << "\nTwoj tekst: " << drugie(trzecie) << endl;
 	}
 	else if (wyb == 4)
 	{
-		cout << "\nTwoj tekst: " << czwarte(text);
+		for (int i = 0; i < 26; i++)
+		{
+			cout << "\nOdszyfrowywanie: " << czwarte(text, i);
+		}
 	}
 	else
 	{
