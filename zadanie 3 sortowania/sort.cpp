@@ -1,6 +1,7 @@
-#include "sortowanie.h"
+#include "sort.h"
 #include <vector>
 #include <iostream>
+#include <time.h>
 #define SIZE 100
 
 using namespace std;
