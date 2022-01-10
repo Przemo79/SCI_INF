@@ -2,10 +2,10 @@
 #include <time.h>
 #include <vector>
 #include <chrono>
-//#include <fstream>
+#include <fstream>
 #include "sort.h"
 #define ilosc 5
-#define zakres_dla_scalania 1000000      // Wielkosc tablicy pomocniczej musi byc taka sama jak wielkosc wektora z wartosciami,
+#define zakres_dla_scalania 200000      // Wielkosc tablicy pomocniczej musi byc taka sama jak wielkosc wektora z wartosciami,
 										 // poniewaz bedziemy scalac wartosci z tych zbiorow, wiec msuza byc takie same.
 using namespace std;
 vector<int> szybki_vector;
@@ -76,8 +76,8 @@ int main()
 {
 	srand(time(NULL));
 
-	//ofstream plik;
-	//plik.open("czasy.txt", ios::app);
+	ofstream plik;
+	plik.open("czasy.txt", ios::app);
 
 	Sortowanie losowanie_obj;
 	Sortowanie wypisz_obj;
@@ -114,6 +114,8 @@ int main()
 	vector<int> selection_liczby;
 	vector<int> estede_liczby;
 
+	plik << "\n\nCzasy sortowan (sekundy):\n";
+
 	for (int zakresy = 0; zakresy < ilosc; zakresy++)
 	{
 		liczby = losowanie_obj.losowanie(liczby, size[zakresy], max_value[zakresy]);
@@ -135,7 +137,8 @@ int main()
 		chrono::duration<double> elapsed_second = end - start;
 
 		cout << "\nBubble sort " << zakresy + 1 << ":\t\t\t" << elapsed_second.count() << "sec\t";
-		//plik << elapsed_second.count();
+		plik << "\n";
+		plik << elapsed_second.count() << "   \t";
 		//wypisz_obj.wypisz(bubble_liczby, size[zakresy]);
 		//------------------------------------------------------------------------------------------------------
 
@@ -145,7 +148,7 @@ int main()
 		chrono::duration<double> elapsed_second2 = end2 - start2;
 
 		cout << "\nSortowanie wstawieniowe " << zakresy + 1 << ":\t" << elapsed_second2.count() << "sec\t";
-		//plik << elapsed_second2.count();
+		plik << elapsed_second2.count() << "   \t";
 		//wypisz_obj.wypisz(karciane_liczby, size[zakresy]);
 		//------------------------------------------------------------------------------------------------------
 
@@ -155,7 +158,7 @@ int main()
 		chrono::duration<double> elapsed_second3 = end3 - start3;
 
 		cout << "\nSortowanie przez wybor " << zakresy + 1 << ":\t" << elapsed_second3.count() << "sec\t";
-		//plik << elapsed_second3.count();
+		plik << elapsed_second3.count() << "   \t";
 		//wypisz_obj.wypisz(selection_liczby, size[zakresy]);
 		//------------------------------------------------------------------------------------------------------
 
@@ -165,7 +168,7 @@ int main()
 		chrono::duration<double> elapsed_second4 = end4 - start4;
 
 		cout << "\nSortowanie std " << zakresy + 1 << ":\t\t" << elapsed_second4.count() << "sec\t";
-		//plik << elapsed_second4.count();
+		plik << elapsed_second4.count() << "   \t";
 		//wypisz_obj.wypisz(estede_liczby, size[zakresy]);
 		//------------------------------------------------------------------------------------------------------
 
@@ -175,7 +178,7 @@ int main()
 		chrono::duration<double> elapsed_second5 = end5 - start5;
 
 		cout << "\nSzybkie sortowanie " << zakresy + 1 << ":\t\t" << elapsed_second5.count() << "sec\t";
-		//plik << elapsed_second5.count();
+		plik << elapsed_second5.count() << "   \t";
 		//wypisz_obj.wypisz(szybki_vector, size[zakresy]);
 		//------------------------------------------------------------------------------------------------------
 
@@ -197,5 +200,5 @@ int main()
 
 	cout << "\nSortowanie przez scalanie (" << zakres_dla_scalania << " wartosci):\t" << elapsed_second6.count() << "sec\t";
 	//wypisz_obj.wypisz(scalony_vector, zakres_dla_scalania);
-	//plik.close();
+	plik.close();
 }
