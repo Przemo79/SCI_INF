@@ -3,7 +3,7 @@
 #include <chrono>
 #include <vector>
 #include <list>
-#define ILOSC 10000
+#define ILOSC 100000
 
 std::vector<int> vec;
 std::list<int> list;
@@ -32,7 +32,7 @@ private:
 
 class List
 {
-	ListElement* head, * tail;
+	ListElement* head, *tail;
 
 public:
 	List();
@@ -99,32 +99,39 @@ MyVector::~MyVector()
 
 void List::wypisz() {
 
+	int temp4 = 0;
 	std::cout << '\n';
 	ListElement* wsk_temp = head;
 	while (wsk_temp != nullptr)
 	{
-		//std::cout << "\t" << wsk_temp->value;
 		wsk_temp = wsk_temp->nextElement;
+		temp4++;
 	}
 }
 
 void MyVector::wypisz()
 {
+	int temp3 = 0;
 	std::cout << '\n';
 	for (int i = 0; i < ILOSC; i++)
 	{
-		//std::cout << "\ttablica[" << i << "] = " << tablica[i];
+		temp3 = i;
 	}
 }
 
 void MyVector::dodaj(int size)
 {
+	size++;
 	int* tempTab = new int[size];
+	int value = 0;
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size - 1; i++)
 	{
 		tempTab[i] = tablica[i];
+		value = i;
 	}
+
+	tempTab[size - 1] = value;
 	delete[] tablica;
 	tablica = tempTab;
 }
@@ -147,17 +154,19 @@ void dodaj_list()
 
 void wypisz_vec()
 {
+	int temp1 = 0;
 	for (int i = 0; i < ILOSC; i++)
 	{
-		vec[i];
+		temp1 = vec[i];
 	}
 }
 
 void wypisz_list()
 {
+	int temp2 = 0;
 	for (int i : list)
 	{
-		i;
+		temp2 = i;
 	}
 }
 
@@ -173,50 +182,54 @@ int main()
 	std::cout << "Program porownuje czas dodawania i odczytywania " << ILOSC << " elementow\nza pomoca MyVector, std::vector, MyList, std::list.";
 
 	auto start = std::chrono::steady_clock::now();
-	MyVector_obj.dodaj(ILOSC);
+	for (int i = 0; i < ILOSC; i++)
+	{
+		MyVector_obj.dodaj(i);
+	}
+	MyVector_obj.dodaj(1);
 	auto end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second = end - start;
-	std::cout << "\n\nDodawanie " << ILOSC << " elementow MyVector trwalo " << elapsed_second.count() << "sekund";
+	std::cout << "\n\nDodawanie " << ILOSC << " elementow MyVector trwalo " << elapsed_second.count() << " sekund";
 
 	auto start2 = std::chrono::steady_clock::now();
 	list_obj.dodaj(ILOSC);
 	auto end2 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second2 = end2 - start2;
-	std::cout << "\n\nDodawanie " << ILOSC << " elementow MyList trwalo " << elapsed_second2.count() << "sekund";
+	std::cout << "\n\nDodawanie " << ILOSC << " elementow MyList trwalo " << elapsed_second2.count() << " sekund";
 
 	auto start8 = std::chrono::steady_clock::now();
 	dodaj_vec();
 	auto end8 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second8 = end8 - start8;
-	std::cout << "\n\nDodawanie " << ILOSC << " elementow std::vector trwalo " << elapsed_second8.count() << "sekund";
+	std::cout << "\n\nDodawanie " << ILOSC << " elementow std::vector trwalo " << elapsed_second8.count() << " sekund";
 
 	auto start5 = std::chrono::steady_clock::now();
 	dodaj_list();
 	auto end5 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second5 = end5 - start5;
-	std::cout << "\n\nDodawanie " << ILOSC << " elementow std::list trwalo " << elapsed_second5.count() << "sekund";
+	std::cout << "\n\nDodawanie " << ILOSC << " elementow std::list trwalo " << elapsed_second5.count() << " sekund";
 
 	auto start3 = std::chrono::steady_clock::now();
 	MyVector_obj.wypisz();
 	auto end3 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second3 = end3 - start3;
-	std::cout << "\nWypisywanie MyVector trwalo " << elapsed_second3.count() << "sekund";
+	std::cout << "\nWypisywanie MyVector trwalo " << elapsed_second3.count() << " sekund";
 
 	auto start4 = std::chrono::steady_clock::now();
 	list_obj.wypisz();
 	auto end4 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second4 = end4 - start4;
-	std::cout << "\nWypisywanie MyList trwalo " << elapsed_second4.count() << "sekund";
+	std::cout << "\nWypisywanie MyList trwalo " << elapsed_second4.count() << " sekund";
 
 	auto start6 = std::chrono::steady_clock::now();
 	wypisz_vec();
 	auto end6 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second6 = end6 - start6;
-	std::cout << "\n\nWypisywanie std::vector trwalo " << elapsed_second6.count() << "sekund";
+	std::cout << "\n\nWypisywanie std::vector trwalo " << elapsed_second6.count() << " sekund";
 
 	auto start7 = std::chrono::steady_clock::now();
 	wypisz_list();
 	auto end7 = std::chrono::steady_clock::now();
 	std::chrono::duration<double> elapsed_second7 = end7 - start7;
-	std::cout << "\n\nWypisywanie std::list trwalo " << elapsed_second7.count() << "sekund" << '\n';
+	std::cout << "\n\nWypisywanie std::list trwalo " << elapsed_second7.count() << " sekund" << '\n';
 }
